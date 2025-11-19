@@ -1,0 +1,17 @@
+﻿using IotClassifier.Application.DTOs;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace IotClassifier.Application.Interfaces
+{
+    public interface IUserService
+    {
+        Task CreateEmployeeAsync(CreateEmployeeDto dto);
+        Task<List<UserDto>> GetAllUsersAsync();
+        Task<List<EmployeeDto>> GetAllEmployeesAsync();
+        Task<UserDto> GetCurrentUserInfoAsync();
+    }
+}
