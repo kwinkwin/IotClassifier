@@ -38,12 +38,12 @@ namespace IotClassifier.API.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPost("CreateEmployee")]
-        public async Task<ActionResult> CreateEmployeeAsync(CreateEmployeeDto dto)
+        public async Task<ActionResult<string>> CreateEmployeeAsync(CreateEmployeeDto dto)
         {
             try
             {
-                await _userService.CreateEmployeeAsync(dto);
-                return Ok();
+                var result = await _userService.CreateEmployeeAsync(dto);
+                return Ok(result);
             }
             catch (Exception ex)
             {
@@ -58,6 +58,22 @@ namespace IotClassifier.API.Controllers
             try
             {
                 var result = await _userService.GetCurrentUserInfoAsync();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Message: {ex.Message} \n InnerException: {ex.InnerException}");
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpDelete("DeactivateEmployee")]
+        public async Task<ActionResult<string>> DeactivateEmployeeAsync(Guid idEmployee)
+        {
+            try
+            {
+                var result = await _userService.DeactivateEmployeeAsync(idEmployee);
                 return Ok(result);
             }
             catch (Exception ex)

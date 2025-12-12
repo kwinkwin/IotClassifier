@@ -9,9 +9,10 @@ namespace IotClassifier.Application.Interfaces
 {
     public interface IUserService
     {
-        Task CreateEmployeeAsync(CreateEmployeeDto dto);
+        Task<string> CreateEmployeeAsync(CreateEmployeeDto dto);
         Task<List<UserDto>> GetAllUsersAsync();
         Task<List<EmployeeDto>> GetAllEmployeesAsync();
         Task<UserDto> GetCurrentUserInfoAsync();
+        Task<string> DeactivateEmployeeAsync(Guid idEmployee);
     }
 }
