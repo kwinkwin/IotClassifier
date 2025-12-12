@@ -34,7 +34,7 @@ namespace IotClassifier.Application.Services
             _userRepository = userRepository;
             _roleRepository = roleRepository;
         }
-        public async Task CreateEmployeeAsync(CreateEmployeeDto dto)
+        public async Task<string> CreateEmployeeAsync(CreateEmployeeDto dto)
         {
             Guid idUser = Guid.Parse(_currentUserService.IdUser);
             var isExistEmployee = await _userRepository.AnyAsync(x => x.Username == dto.Username);
@@ -60,6 +60,8 @@ namespace IotClassifier.Application.Services
 
             await _userRepository.AddAsync(user);
             await _userRepository.SaveChangesAsync();
+
+            return "Created employee successfully.";
         }
 
         public async Task<List<UserDto>> GetAllUsersAsync()
@@ -118,6 +120,24 @@ namespace IotClassifier.Application.Services
             result.Username = currentUser.Username;
 
             return result;
+        }
+
+        public async Task<string> DeactivateEmployeeAsync(Guid idEmployee)
+        {
+            var employee = await _userRepository.FirstOrDefaultAsync(x => x.IdUser == idEmployee &&
+                                                                          x.Status == (int)CommonStatus.Active);
+            if (employee == null)
+            {
+                throw new Exception("Not found this employee.");
+            }
+
+            employee.Status = (int)CommonStatus.Inactive;
+            employee.UpdatedDate = DateTime.UtcNow;
+            employee.UpdatedBy = _currentUserService.IdUser.ToString();
+            _userRepository.Update(employee);
+            await _userRepository.SaveChangesAsync();
+
+            return "Employee account has been deactivated successfully.";
         }
     }
 }
