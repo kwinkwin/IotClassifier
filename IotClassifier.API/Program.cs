@@ -72,6 +72,7 @@ builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAuthenService, AuthenService>();
+builder.Services.AddScoped<IClassificationService, ClassificationService>();
 
 
 builder.Services.AddCors(options =>
