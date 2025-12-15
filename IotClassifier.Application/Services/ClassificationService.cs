@@ -47,6 +47,7 @@ namespace IotClassifier.Application.Services
 
             var newLog = new ClassificationLog
             {
+                IdClassificationLog = Guid.NewGuid(),
                 IdComponentType = existingType.IdComponentType, 
                 Score = request.Score,
                 Timestamp = DateTime.Now,
