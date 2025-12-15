@@ -36,7 +36,7 @@ namespace IotClassifier.API.Controllers
             }
         }
 
-        [HttpPost("GetTodayStatistics")]
+        [HttpPost("AddClassificationLog")]
         public async Task<ActionResult<string>> AddClassificationLogAsync(CreateClassificationLogDto request)
         {
             try
